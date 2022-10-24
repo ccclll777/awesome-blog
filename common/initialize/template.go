@@ -38,7 +38,7 @@ func BuildViewData(title string, data interface{}) map[string]interface{} {
 	return map[string]interface{}{
 		"Title":  title,
 		"Data":   data,
-		"Config": Cfg,
+		"Config": Cfg.Blog,
 		"Navs":   Navigations,
 	}
 }

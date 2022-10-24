@@ -2,7 +2,6 @@ package models
 
 import (
 	"awesome-blog/common/initialize"
-	"fmt"
 	"time"
 )
 
@@ -39,19 +38,32 @@ type PostJson struct {
 func (Post) TableName() string {
 	return "post"
 }
-func (e *Post) GetPostList(page, pageSize int) []Post {
+func (e *Post) GetPostList(page, pageSize int) ([]Post, error) {
 	offset := (page - 1) * pageSize
 	queryBuider := initialize.Db.Limit(pageSize).Offset(offset).Order("updated_at asc").Table(e.TableName())
 	var postList []Post
-	err := queryBuider.Find(&postList)
-	if err.Error != nil {
-		fmt.Errorf("查询博客列表失败: ", err)
-		return nil
+	if err := queryBuider.Find(&postList).Error; err != nil {
+		return nil, err
 	}
-	return postList
+	return postList, nil
 }
 func (e *Post) GetPostCount() int {
 	var total int64
 	initialize.Db.Table(e.TableName()).Count(&total)
 	return int(total)
+}
+func (e *Post) GetPostByCategoryId(category_id int, postQuantity int) ([]Post, error) {
+	var postList []Post
+	if err := initialize.Db.Table(e.TableName()).Where("category_id =?", category_id).Limit(postQuantity).Find(&postList).Error; err != nil {
+		return nil, err
+	}
+	return postList, nil
+}
+func (e *Post) GetPostListByTag(tag_id int, postQuantity int) ([]Post, error) {
+	var posts []Post
+	if err := initialize.Db.Table(e.TableName()).
+		Where("id in ( select post_id as id from post_tag where tag_id = ?)", tag_id).Limit(postQuantity).Find(&posts).Error; err != nil {
+		return nil, err
+	}
+	return posts, nil
 }

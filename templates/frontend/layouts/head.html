@@ -6,12 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="public/img/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!--    <meta name="Keywords" content="{{ .Config.HtmlKeywords }}" />-->
-    <meta name="Keywords" content="123213123" />
-    <meta name="description" content="11" />3
-<!--    <meta name="description" content="{{ .Config.HtmlDescription }}" />-->
-    <title>3131 - 3131</title>
-    <style>:root{--primary: "#f44336"}</style>
+    <meta name="Keywords" content="{{ .Config.HtmlKeywords }}" />
+    <meta name="description" content="{{ .Config.HtmlDescription }}" />
+    <title>{{ .Title }} - {{ .Config.SiteName }}</title>
+    <style>:root{--primary: {{ .Config.ThemeColor }}}</style>
     <link rel="stylesheet" href="/public/css/prism.css">
     <link rel="stylesheet" href="/public/css/app.css">
     <script>
@@ -40,10 +38,10 @@
         }
     </script>
 </head>
-<body class="theme #f44336>
+<body class="theme{{ .Config.ThemeColor }}">
     <nav class="head">
         <div class="container head-content">
-            <div class="logo">ccclll777's Personal Blog</div>
+            <div class="logo">{{ .Config.SiteName }}</div>
             <div class="nav">
                 <a href="/blog">Blog</a>
                 <a href="/categories">Categories</a>

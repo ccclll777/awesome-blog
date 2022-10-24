@@ -26,7 +26,8 @@ func (c *IndexService) GetPost(id int) models.Post {
 
 func (c *IndexService) GetPostList(page, pageSize int) models.PostPageResult {
 	var postList []models.Post
-	postList = postData.GetPostList(page, pageSize)
+	//var err error
+	postList, _ = postData.GetPostList(page, pageSize)
 	fmt.Printf("post=%+v\n", postList[0])
 	total := postData.GetPostCount()
 	fmt.Printf("total", total)
@@ -36,20 +37,19 @@ func (c *IndexService) GetPostList(page, pageSize int) models.PostPageResult {
 	for _, post := range postList {
 		wg.Add(1)
 		go func() {
-			var category models.Category
-			category, _ = categoryData.GetCategoryById(post.CategoryId)
-			tags, _ := tagData.GetTagListByPost(post.ID)
-			var tagStrs []string
-			for _, tag := range tags {
-				tagStrs = append(tagStrs, tag.Name)
-			}
-			fmt.Println(tagStrs)
-			var user models.User
-			user, _ = userData.GetUserById(post.AuthorId)
-			postJsons = append(postJsons, models.PostJson{post.Title,
-				post.UpdatedAt,
-				post.Description,
-				tagStrs, user.Username, post.MusicId, "", "", category.Name})
+			//var category models.Category
+			//category, _ = categoryData.GetCategoryById(post.CategoryId)
+			//tags, _ := tagData.GetTagListByPost(post.ID)
+			//var tagStrs []string
+			//for _, tag := range tags {
+			//	tagStrs = append(tagStrs, tag.Name)
+			//}
+			//fmt.Println(tagStrs)
+			//var user models.User
+			//user, _ = userData.GetUserById(post.AuthorId)
+			var postJson models.PostJson
+			postJson = c.GetPostJson(post)
+			postJsons = append(postJsons, postJson)
 			wg.Done()
 		}()
 	}
@@ -57,4 +57,20 @@ func (c *IndexService) GetPostList(page, pageSize int) models.PostPageResult {
 	//fmt.Println(postJsons)
 	result := models.Pagination(&postJsons, page, initialize.Cfg.Blog.PageSize, int(total))
 	return result
+}
+func (c *IndexService) GetPostJson(post models.Post) models.PostJson {
+	var category models.Category
+	category, _ = categoryData.GetCategoryById(post.CategoryId)
+	tags, _ := tagData.GetTagListByPost(post.ID)
+	var tagStrs []string
+	for _, tag := range tags {
+		tagStrs = append(tagStrs, tag.Name)
+	}
+	fmt.Println(tagStrs)
+	var user models.User
+	user, _ = userData.GetUserById(post.AuthorId)
+	return models.PostJson{post.Title,
+		post.UpdatedAt,
+		post.Description,
+		tagStrs, user.Username, post.MusicId, "", "", category.Name}
 }

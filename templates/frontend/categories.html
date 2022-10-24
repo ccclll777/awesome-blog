@@ -7,8 +7,9 @@
                     <h3><img class="icon" src="/public/img/folder.svg" alt=""> {{ .Name }} <sub>({{ .Quantity }})</sub></h3>
                 </a>
                 <article class="categories-article">
-                    {{range .Articles}}
-                        <a href="/article?key={{ .ShortUrl }}">{{ .Title }}</a>
+                    {{range .Posts}}
+                        <a href="/post?key={{ .ShortUrl }}">{{ .Title }}</a>
+<!--                            <a href="/post?key=123">{{ .Title }}</a>-->
                     {{end}}
                 </article>
             </div>

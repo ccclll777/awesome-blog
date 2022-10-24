@@ -2,6 +2,7 @@ package models
 
 import (
 	"awesome-blog/common/initialize"
+	"fmt"
 	"time"
 )
 
@@ -11,7 +12,13 @@ type Tag struct {
 	Description string    `gorm:"desc" `          // 专题描述
 	CreatedAt   time.Time `gorm:"created_at"`     // 创建时间
 }
+type TagJson struct {
+	Name     string
+	Quantity int
+	Posts    []PostJson
+}
 
+// type Categories []Category
 func (Tag) TableName() string {
 	return "tag"
 }
@@ -28,5 +35,13 @@ func (e *Tag) GetTagListByPost(post_id int) ([]Tag, error) {
 		Where("id in ( select tag_id as id from post_tag where post_id = ?)", post_id).Find(&tags).Error; err != nil {
 		return nil, err
 	}
+	return tags, nil
+}
+func (e *Tag) GetAllTag() ([]Tag, error) {
+	var tags []Tag
+	if err := initialize.Db.Table(e.TableName()).Find(&tags).Error; err != nil {
+		return nil, err
+	}
+	fmt.Println(tags)
 	return tags, nil
 }
