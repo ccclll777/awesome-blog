@@ -34,7 +34,6 @@ func (t TemplatePointer) WriteError(w io.Writer, err error) {
 }
 
 func BuildViewData(title string, data interface{}) map[string]interface{} {
-	fmt.Println("data", data)
 	return map[string]interface{}{
 		"Title":  title,
 		"Data":   data,

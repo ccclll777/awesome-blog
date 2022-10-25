@@ -2,7 +2,6 @@ package models
 
 import (
 	"awesome-blog/common/initialize"
-	"fmt"
 	"time"
 )
 
@@ -38,6 +37,5 @@ func (e *Category) GetAllCategory() ([]Category, error) {
 	if err := initialize.Db.Table(e.TableName()).Find(&categories).Error; err != nil {
 		return nil, err
 	}
-	fmt.Println(categories)
 	return categories, nil
 }

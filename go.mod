@@ -40,6 +40,7 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.4.1 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
+	github.com/yuin/goldmark v1.5.2 // indirect
 	golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4 // indirect
 	golang.org/x/image v0.0.0-20190802002840-cff245a6509b // indirect
 	golang.org/x/net v0.0.0-20220520000938-2e3eb7b945c2 // indirect

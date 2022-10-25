@@ -27,7 +27,7 @@ func (c *CategoryService) GetGroupByCategory(postQuantity int) CategoryPosts {
 			posts, _ := postData.GetPostByCategoryId(category.Id, postQuantity)
 			var postJsonList []models.PostJson
 			for _, post := range posts {
-				postJsonList = append(postJsonList, indexPostService.GetPostJson(post))
+				postJsonList = append(postJsonList, indexPostService.GetPostJson(&post))
 			}
 			categoryJson := models.CategoryJson{category.Name, len(posts), postJsonList}
 			categoryList = append(categoryList, categoryJson)

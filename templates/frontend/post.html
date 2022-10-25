@@ -39,17 +39,17 @@
 </div>
 {{ end }}
 <div  class="article markdow">
-    {{  .Data.Content }}
+    {{  .Data.Body }}
 </div>
 
-<!--<script src="/public/js/prism.js"></script>-->
-<!--{{if ne .Config.UtterancesRepo ""}}-->
-<!--    <script src="https://utteranc.es/client.js"-->
-<!--            repo="{{ .Config.UtterancesRepo }}"-->
-<!--            issue-term="[{{ .Data.Title }}]"-->
-<!--            theme="github-light"-->
-<!--            crossorigin="anonymous"-->
-<!--            async>-->
-<!--    </script>-->
+<script src="/public/js/prism.js"></script>
+{{if ne .Config.UtterancesRepo ""}}
+    <script src="https://utteranc.es/client.js"
+            repo="{{ .Config.UtterancesRepo }}"
+            issue-term="[{{ .Data.Title }}]"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
 {{end}}
 {{template "footer" .}}

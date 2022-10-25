@@ -33,11 +33,11 @@ type PostJson struct {
 	MusicId     string    `json:"musicId"`
 	Category    string
 }
-
 type PostDatail struct {
 	Post
 	Tags     []string
 	Category string
+	Body     string
 }
 
 func (Post) TableName() string {

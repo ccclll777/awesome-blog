@@ -2,7 +2,6 @@ package models
 
 import (
 	"awesome-blog/common/initialize"
-	"fmt"
 	"time"
 )
 
@@ -42,6 +41,5 @@ func (e *Tag) GetAllTag() ([]Tag, error) {
 	if err := initialize.Db.Table(e.TableName()).Find(&tags).Error; err != nil {
 		return nil, err
 	}
-	fmt.Println(tags)
 	return tags, nil
 }
