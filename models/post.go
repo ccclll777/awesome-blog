@@ -24,19 +24,31 @@ type Post struct {
 	Category    string
 }
 type PostJson struct {
+	Id          int
 	Title       string    `json:"title"`
 	Date        time.Time `json:"date"`
 	Description string    `json:"description"`
 	Tags        []string  `json:"tags"`
 	Author      string    `json:"author"`
 	MusicId     string    `json:"musicId"`
-	Path        string
-	ShortUrl    string
 	Category    string
+}
+
+type PostDatail struct {
+	Post
+	Tags     []string
+	Category string
 }
 
 func (Post) TableName() string {
 	return "post"
+}
+func (e *Post) GetPostById(post_id int) (Post, error) {
+	var post Post
+	if err := initialize.Db.Table(e.TableName()).Where("id =?", post_id).Find(&post).Error; err != nil {
+		return post, err
+	}
+	return post, nil
 }
 func (e *Post) GetPostList(page, pageSize int) ([]Post, error) {
 	offset := (page - 1) * pageSize

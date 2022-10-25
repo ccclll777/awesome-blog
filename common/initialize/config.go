@@ -24,6 +24,8 @@ type Blog struct {
 	PageSize                int      `mapstructure:"pageSize"`
 	DescriptionLen          int      `mapstructure:"descriptionLen"`
 	Author                  string   `mapstructure:"author"`
+	AppRepository           string   `mapstructure:"AppRepository"`
+	AppName                 string   `mapstructure:"AppName"`
 	CategoryDisplayQuantity int      `mapstructure:"categoryDisplayQuantity"`
 	TagDisplayQuantity      int      `mapstructure:"tagDisplayQuantity"`
 	TimeLayout              string   `mapstructure:"timeLayout"`

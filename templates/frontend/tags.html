@@ -8,7 +8,7 @@
                 </a>
                 <article class="categories-article">
                     {{range .Posts}}
-                        <a href="/article?key={{ .ShortUrl }}">{{ .Title }}</a>
+                        <a href="/post?id={{ .Id }}">{{ .Title }}</a>
                     {{end}}
                 </article>
             </div>

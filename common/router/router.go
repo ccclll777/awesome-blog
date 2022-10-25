@@ -11,9 +11,7 @@ func Router() {
 	http.HandleFunc("/blog", controller.Index)
 	http.HandleFunc("/categories", controller.Category)
 	http.HandleFunc("/tags", controller.Tag)
-	//
-	//http.HandleFunc(config.Cfg.GitHookUrl, controller.GithubHook)
-	//http.HandleFunc( config.Cfg.DashboardEntrance, controller.Dashboard)
+	http.HandleFunc("/post", controller.Post)
 
 	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir(initialize.SystemCfg.CurrentDir+"/public"))))
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir(initialize.SystemCfg.DocumentAssetsDir))))

@@ -4,6 +4,7 @@ import (
 	"awesome-blog/api/frontend/service"
 	"awesome-blog/common/initialize"
 	"awesome-blog/common/router"
+	"awesome-blog/models"
 	"fmt"
 	"net/http"
 )
@@ -12,13 +13,15 @@ import (
 // var indexPostService service.IndexService
 var categoryService service.CategoryService
 
-//var categoryData models.Category
-//var tagData models.Tag
-//var postData models.Post
+// var categoryData models.Category
+// var tagData models.Tag
+var postData models.Post
 
 func main() {
 	initialize.Init()
 	router.Router()
+	//post, _ := postData.GetPostById(1)
+	//fmt.Println(post)
 	//var categories []models.Categories
 	//categories, _ := categoryData.GetAllCategory()
 	//fmt.Println(categories)

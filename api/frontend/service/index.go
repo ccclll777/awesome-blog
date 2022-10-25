@@ -66,11 +66,10 @@ func (c *IndexService) GetPostJson(post models.Post) models.PostJson {
 	for _, tag := range tags {
 		tagStrs = append(tagStrs, tag.Name)
 	}
-	fmt.Println(tagStrs)
 	var user models.User
 	user, _ = userData.GetUserById(post.AuthorId)
-	return models.PostJson{post.Title,
+	return models.PostJson{post.ID, post.Title,
 		post.UpdatedAt,
 		post.Description,
-		tagStrs, user.Username, post.MusicId, "", "", category.Name}
+		tagStrs, user.Username, post.MusicId, category.Name}
 }

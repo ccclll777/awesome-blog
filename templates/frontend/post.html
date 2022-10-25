@@ -29,7 +29,7 @@
 
     <span>
             <img class="icon" src="/public/img/date.svg" alt="">
-            <span>发表于{{ .Data.Date.Format "2006-01-02 15:04" }}</span>
+            <span>发表于{{ .Data.UpdatedAt.Format "2006-01-02 15:04" }}</span>
         </span>
 </div>
 {{ if ne .Data.MusicId "" }}
@@ -39,17 +39,17 @@
 </div>
 {{ end }}
 <div  class="article markdow">
-    {{  .Data.Body }}
+    {{  .Data.Content }}
 </div>
 
-<script src="/public/js/prism.js"></script>
-{{if ne .Config.UtterancesRepo ""}}
-    <script src="https://utteranc.es/client.js"
-            repo="{{ .Config.UtterancesRepo }}"
-            issue-term="[{{ .Data.Title }}]"
-            theme="github-light"
-            crossorigin="anonymous"
-            async>
-    </script>
+<!--<script src="/public/js/prism.js"></script>-->
+<!--{{if ne .Config.UtterancesRepo ""}}-->
+<!--    <script src="https://utteranc.es/client.js"-->
+<!--            repo="{{ .Config.UtterancesRepo }}"-->
+<!--            issue-term="[{{ .Data.Title }}]"-->
+<!--            theme="github-light"-->
+<!--            crossorigin="anonymous"-->
+<!--            async>-->
+<!--    </script>-->
 {{end}}
 {{template "footer" .}}
