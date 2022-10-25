@@ -50,31 +50,50 @@ func (e *Post) GetPostById(post_id int) (Post, error) {
 	}
 	return post, nil
 }
+
 func (e *Post) GetPostList(page, pageSize int) ([]Post, error) {
 	offset := (page - 1) * pageSize
-	queryBuider := initialize.Db.Limit(pageSize).Offset(offset).Order("updated_at asc").Table(e.TableName())
+	queryBuider := initialize.Db.Limit(pageSize).Offset(offset).Order("created_at asc").Table(e.TableName())
 	var postList []Post
 	if err := queryBuider.Find(&postList).Error; err != nil {
 		return nil, err
 	}
 	return postList, nil
 }
-func (e *Post) GetPostCount() int {
+func (e *Post) GetPostCount() (int, error) {
 	var total int64
-	initialize.Db.Table(e.TableName()).Count(&total)
-	return int(total)
+	if err := initialize.Db.Table(e.TableName()).Count(&total).Error; err != nil {
+		return 0, err
+	}
+	return int(total), nil
 }
-func (e *Post) GetPostByCategoryId(category_id int, postQuantity int) ([]Post, error) {
+func (e *Post) GetPostCountByTag(tag_id int) (int, error) {
+	var total int64
+	if err := initialize.Db.Table("post_tag").Where("tag_id =?", tag_id).Count(&total).Error; err != nil {
+		return 0, err
+	}
+	return int(total), nil
+}
+func (e *Post) GetPostCountByCategory(category_id int) (int, error) {
+	var total int64
+	if err := initialize.Db.Table(e.TableName()).Where("category_id =?", category_id).Count(&total).Error; err != nil {
+		return 0, err
+	}
+	return int(total), nil
+}
+func (e *Post) GetPostsByCategoryId(category_id int, page, postQuantity int) ([]Post, error) {
+	offset := (page - 1) * postQuantity
 	var postList []Post
-	if err := initialize.Db.Table(e.TableName()).Where("category_id =?", category_id).Limit(postQuantity).Find(&postList).Error; err != nil {
+	if err := initialize.Db.Table(e.TableName()).Where("category_id =?", category_id).Limit(postQuantity).Offset(offset).Order("created_at asc").Find(&postList).Error; err != nil {
 		return nil, err
 	}
 	return postList, nil
 }
-func (e *Post) GetPostListByTag(tag_id int, postQuantity int) ([]Post, error) {
+func (e *Post) GetPostsByTagId(tag_id int, page, postQuantity int) ([]Post, error) {
+	offset := (page - 1) * postQuantity
 	var posts []Post
 	if err := initialize.Db.Table(e.TableName()).
-		Where("id in ( select post_id as id from post_tag where tag_id = ?)", tag_id).Limit(postQuantity).Find(&posts).Error; err != nil {
+		Where("id in ( select post_id as id from post_tag where tag_id = ?)", tag_id).Limit(postQuantity).Offset(offset).Order("created_at asc").Find(&posts).Error; err != nil {
 		return nil, err
 	}
 	return posts, nil

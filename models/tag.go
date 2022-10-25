@@ -28,6 +28,13 @@ func (e *Tag) GetTagById(id int) (Tag, error) {
 	}
 	return tag, nil
 }
+func (e *Tag) GetTagByName(tag_name string) (Tag, error) {
+	var tag Tag
+	if err := initialize.Db.Table(e.TableName()).Where("name = ?", tag_name).First(&tag).Error; err != nil {
+		return tag, err
+	}
+	return tag, nil
+}
 func (e *Tag) GetTagListByPost(post_id int) ([]Tag, error) {
 	var tags []Tag
 	if err := initialize.Db.Table(e.TableName()).

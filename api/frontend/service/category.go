@@ -24,7 +24,7 @@ func (c *CategoryService) GetGroupByCategory(postQuantity int) CategoryPosts {
 		//fmt.Println("category", category)
 		wg.Add(1)
 		go func() {
-			posts, _ := postData.GetPostByCategoryId(category.Id, postQuantity)
+			posts, _ := postData.GetPostsByCategoryId(category.Id, 1, postQuantity)
 			var postJsonList []models.PostJson
 			for _, post := range posts {
 				postJsonList = append(postJsonList, indexPostService.GetPostJson(&post))

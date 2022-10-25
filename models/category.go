@@ -32,6 +32,13 @@ func (e *Category) GetCategoryById(id int) (Category, error) {
 	}
 	return category, nil
 }
+func (e *Category) GetCategoryByName(category_name string) (Category, error) {
+	var category Category
+	if err := initialize.Db.Table(e.TableName()).Where("name = ?", category_name).Find(&category).Error; err != nil {
+		return category, err
+	}
+	return category, nil
+}
 func (e *Category) GetAllCategory() ([]Category, error) {
 	var categories []Category
 	if err := initialize.Db.Table(e.TableName()).Find(&categories).Error; err != nil {
