@@ -12,3 +12,4 @@ tmp
 config.yaml
 images
 cache
+admin/node_modules

@@ -3,8 +3,8 @@ package main
 import (
 	"awesome-blog/api/frontend/service"
 	"awesome-blog/common/initialize"
-	"awesome-blog/common/router"
 	"awesome-blog/models"
+	"awesome-blog/router"
 	"fmt"
 	"net/http"
 )
