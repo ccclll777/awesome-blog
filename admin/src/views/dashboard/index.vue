@@ -1,31 +1,49 @@
 <template>
-  <div class="dashboard-container">
-    <component :is="currentRole" />
+  <div class="dashboard-editor-container">
+    123123213
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import adminDashboard from './admin'
-import editorDashboard from './editor'
 
 export default {
-  name: 'Dashboard',
-  components: { adminDashboard, editorDashboard },
+  name: 'DashboardAdmin',
+  components: {
+  },
   data() {
     return {
-      currentRole: 'adminDashboard'
+
     }
   },
-  computed: {
-    ...mapGetters([
-      'roles'
-    ])
-  },
-  created() {
-    if (!this.roles.includes('admin')) {
-      this.currentRole = 'editorDashboard'
-    }
+  methods: {
+
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.dashboard-editor-container {
+  padding: 32px;
+  background-color: rgb(240, 242, 245);
+  position: relative;
+
+  .github-corner {
+    position: absolute;
+    top: 0px;
+    border: 0;
+    right: 0;
+  }
+
+  .chart-wrapper {
+    background: #fff;
+    padding: 16px 16px 0;
+    margin-bottom: 32px;
+  }
+}
+
+@media (max-width:1024px) {
+  .chart-wrapper {
+    padding: 8px;
+  }
+}
+</style>

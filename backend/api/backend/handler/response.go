@@ -1,0 +1,17 @@
+package handler
+
+// 状态码
+const (
+	Success      = 100 // 请求成功
+	Redirect     = 101 // 重定向
+	Forbidden    = 102 // 禁止访问
+	RequestError = 103 // 请求数据缺失或者有误
+	ServerError  = 104 // 服务器错误
+)
+
+// Result RestFulApi 返回信息结构
+type ResponseResult struct {
+	Code int         `json:"code" example:"100"` // 状态码
+	Msg  string      `json:"msg" example:"密码错误"` // 提示
+	Data interface{} `json:"data"`               // 数据
+}

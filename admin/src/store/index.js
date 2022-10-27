@@ -15,7 +15,9 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   const value = modulesFiles(modulePath)
   modules[moduleName] = value.default
   return modules
-}, {})
+}, {
+
+})
 
 const store = new Vuex.Store({
   modules,
