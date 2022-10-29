@@ -50,3 +50,41 @@ func (e *Tag) GetAllTag() ([]Tag, error) {
 	}
 	return tags, nil
 }
+
+func (e *Tag) GetTagCount() (int, error) {
+	var total int64
+	if err := global.Db.Table(e.TableName()).Count(&total).Error; err != nil {
+		return 0, err
+	}
+	return int(total), nil
+}
+func (e *Tag) GetTagList(page, pageSize int) ([]Tag, error) {
+	offset := (page - 1) * pageSize
+	queryBuider := global.Db.Limit(pageSize).Offset(offset).Order("id asc").Table(e.TableName())
+	var tagList []Tag
+	if err := queryBuider.Find(&tagList).Error; err != nil {
+		return nil, err
+	}
+	return tagList, nil
+}
+func (e *Tag) DeleteTagById(id int) error {
+	var tag Tag
+	if err := global.Db.Table(e.TableName()).Where("id = ?", id).Delete(&tag).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func (e *Tag) UpdateTag(tag Tag) (Tag, error) {
+	if err := global.Db.Table(e.TableName()).Where("id = ?", tag.Id).Updates(Category{Name: tag.Name, Description: tag.Description}).Error; err != nil {
+		return tag, err
+	}
+	return tag, nil
+}
+
+func (e *Tag) AddTag(tag Tag) (Tag, error) {
+	if err := global.Db.Table(e.TableName()).Create(&tag).Error; err != nil {
+		return tag, err
+	}
+	return tag, nil
+}

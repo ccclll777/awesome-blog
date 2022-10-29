@@ -36,9 +36,9 @@ func (c *AuthHandler) Login(g *gin.Context) {
 	}
 
 	if err := g.ShouldBind(&request); err != nil {
-		result.Code = handler.RequestError   // 请求数据有误
-		result.Msg = utils.GetFormError(err) // 获取表单错误信息
-		g.JSON(http.StatusOK, result)        // 返回 json
+		result.Code = handler.RequestError    // 请求数据有误
+		result.Msg = utils.GetFormError(err)  // 获取表单错误信息
+		g.JSON(http.StatusBadRequest, result) // 返回 json
 		return
 	}
 	user, _ := c.authService.GetUser(request.Username)
@@ -55,29 +55,29 @@ func (c *AuthHandler) Login(g *gin.Context) {
 		return
 	}
 	decodedClaims := utils.VerifyToken(user.Token, global.Cfg.Server.TokenSecretKey)
+
 	if decodedClaims == nil {
+
 		jwtClaims := jwt.NewWithClaims(
 			jwt.SigningMethodHS256, jwt.MapClaims{
 				"userId":   strconv.FormatInt(int64(user.ID), 10),
 				"username": user.Username,
 				"iat":      time.Now().Unix(),
-				"exp": time.Now().Add(time.Second * time.
-					Duration(global.Cfg.Server.TokenExpireTime)).Unix(),
-				"isAdmin": user.IsAdmin,
+				"isAdmin":  user.IsAdmin,
 			})
 		token := utils.GenerateToken(jwtClaims, global.Cfg.Server.TokenSecretKey)
 		user.Token = token
-		err := c.authService.UpdateUser(&user)
+		//err := c.authService.UpdateUser(&user)
 
-		if err != nil {
-			global.Logger.Sugar().Error("error: ", err.Error())
-			result.Code = handler.ServerError
-			result.Msg = "服务器端错误"
-			g.JSON(http.StatusOK, result) // 返回 json
-			return
-		}
+		//if err != nil {
+		//	global.Logger.Sugar().Error("error: ", err.Error())
+		//	result.Code = handler.ServerError
+		//	result.Msg = "服务器端错误"
+		//	g.JSON(http.StatusOK, result) // 返回 json
+		//	return
+		//}
 		//插入redis 用token查询用户的userId 设置过期时间为24h
-		err = global.RDb.Set(global.Ctx, user.Token, user.ID, time.Hour*24).Err()
+		err := global.RDb.Set(global.Ctx, user.Token, user.ID, time.Hour*24).Err()
 		if err != nil {
 			global.Logger.Sugar().Error("Redis error: ", err.Error())
 			result.Code = handler.ServerError
@@ -88,6 +88,40 @@ func (c *AuthHandler) Login(g *gin.Context) {
 	}
 	userResponse := LoginResponse{user.Username, user.ID, user.Token, user.IsAdmin, user.Email}
 	result.Data = userResponse
+	g.JSON(
+		http.StatusOK, result)
+}
+
+// UserInfo godoc
+// @Summary 退出登陆，清空token信息
+// @Tags User
+// @version 1.0
+// @Accept application/json
+// @Success 100 object  ResponseResult
+// @Failure 103/104 object ResponseResult 失败
+// @Router /api/v1/user/logout [post]
+func (c *AuthHandler) Logout(g *gin.Context) {
+	var request LogoutRequest
+
+	result := ResponseResult{ // 定义 api 返回信息结构
+		Code: handler.Success,
+		Msg:  "退出登录",
+		Data: nil,
+	}
+	if err := g.ShouldBind(&request); err != nil {
+		result.Code = handler.RequestError   // 请求数据有误
+		result.Msg = utils.GetFormError(err) // 获取表单错误信息
+		g.JSON(http.StatusOK, result)        // 返回 json
+		return
+	}
+	token := request.Token
+	_, err := global.RDb.Del(global.Ctx, token).Result()
+	if err != nil {
+		result.Code = handler.ServerError
+		result.Msg = "Redis错误"
+		g.JSON(http.StatusOK, result) // 返回 json
+		return
+	}
 	g.JSON(
 		http.StatusOK, result)
 }

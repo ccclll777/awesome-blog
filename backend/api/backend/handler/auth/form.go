@@ -14,3 +14,8 @@ type LoginResponse struct {
 	IsAdmin  int    `json:"isAdmin"`
 	Email    string `json:"email"`
 }
+
+// 登录请求
+type LogoutRequest struct {
+	Token string `json:"token"`
+}

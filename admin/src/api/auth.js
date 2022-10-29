@@ -8,10 +8,10 @@ export function login(data) {
     data: data // 请求数据
   })
 }
-export function getInfo(data) {
+// 退出登录
+export function logout() {
   return request({
-    url: '/user/info', // 请求地址
-    method: 'post', // 请求类型
-    data: data // 请求数据
+    url: '/auth/logout',
+    method: 'post'
   })
 }

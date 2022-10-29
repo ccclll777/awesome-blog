@@ -43,6 +43,7 @@ func (c *UserHandler) UserInfo(g *gin.Context) {
 	userId, err := global.RDb.Get(global.Ctx, token).Result()
 	fmt.Println("userId", userId)
 	if err != nil {
+		global.Logger.Sugar().Error("Redis error: ", err.Error())
 		result.Code = handler.ServerError
 		result.Msg = "Redis错误"
 		g.JSON(http.StatusOK, result) // 返回 json

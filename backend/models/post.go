@@ -98,3 +98,11 @@ func (e *Post) GetPostsByTagId(tag_id int, page, postQuantity int) ([]Post, erro
 	}
 	return posts, nil
 }
+
+func (e *Post) GetPostCountByCategoryId(category_id int) (int, error) {
+	var total int64
+	if err := global.Db.Table(e.TableName()).Where("category_id =?", category_id).Count(&total).Error; err != nil {
+		return 0, err
+	}
+	return int(total), nil
+}

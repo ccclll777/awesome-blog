@@ -25,18 +25,17 @@ func GenerateToken(claims *jwt.Token, secret string) (token string) {
 
 // 验证token
 func VerifyToken(token string, secret string) *DecodedToken {
+
 	hmacSecretString := secret
 	hmacSecret := []byte(hmacSecretString)
-
 	decoded, err := jwt.Parse(
 		token, func(token *jwt.Token) (interface{}, error) {
 			return hmacSecret, nil
 		})
-
+	//fmt.Println("decoded", decoded)
 	if err != nil {
 		return nil
 	}
-
 	if !decoded.Valid {
 		return nil
 	}
@@ -46,9 +45,9 @@ func VerifyToken(token string, secret string) *DecodedToken {
 	var decodedToken DecodedToken
 	jsonString, _ := json.Marshal(decodedClaims)
 	jsonErr := json.Unmarshal(jsonString, &decodedToken)
+
 	if jsonErr != nil {
 		log.Print(jsonErr)
 	}
-
 	return &decodedToken
 }
