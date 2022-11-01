@@ -31,6 +31,7 @@ func (a *ApiRouter) InitAdminRouter(rootPath string, router *gin.Engine) {
 	{
 		categoryApiRouter.GET("/category/count", middlewares.AuthAdminMiddleware(), categoryHandler.CategoryCount)
 		categoryApiRouter.GET("/category/list", middlewares.AuthAdminMiddleware(), categoryHandler.CategoryList)
+		categoryApiRouter.GET("/category/all", middlewares.AuthAdminMiddleware(), categoryHandler.AllCategory)
 		categoryApiRouter.POST("/category/edit", middlewares.AuthAdminMiddleware(), categoryHandler.EditCategory)
 		categoryApiRouter.DELETE("/category/:id", middlewares.AuthAdminMiddleware(), categoryHandler.DeleteCategory)
 		categoryApiRouter.POST("/category/add", middlewares.AuthAdminMiddleware(), categoryHandler.AddCategory)
@@ -41,6 +42,7 @@ func (a *ApiRouter) InitAdminRouter(rootPath string, router *gin.Engine) {
 	{
 		tagApiRouter.GET("/tag/count", middlewares.AuthAdminMiddleware(), tagHandler.TagCount)
 		tagApiRouter.GET("/tag/list", middlewares.AuthAdminMiddleware(), tagHandler.TagList)
+		tagApiRouter.GET("/tag/all", middlewares.AuthAdminMiddleware(), tagHandler.AllTag)
 		//tagApiRouter.POST("/category/edit", middlewares.AuthAdminMiddleware(), categoryHandler.EditCategory)
 		tagApiRouter.DELETE("/tag/:id", middlewares.AuthAdminMiddleware(), tagHandler.DeleteTag)
 		tagApiRouter.POST("/tag/add", middlewares.AuthAdminMiddleware(), tagHandler.AddTag)

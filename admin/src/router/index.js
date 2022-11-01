@@ -9,7 +9,7 @@ import PostCategory from '@/views/category/index'
 import Dashboard from '@/views/dashboard/index'
 import Tag from '@/views/tag/index'
 
-import Post from '@/views/post/index'
+import Post from '@/views/addPost/index'
 import Login from '@/views/login/index'
 import Error404 from '@/views/errorPage/404'
 export const constantRoutes = [
@@ -36,7 +36,7 @@ export const constantRoutes = [
     }]
   },
   {
-    path: '/post',
+    path: '/addPost',
     component: Layout,
     redirect: '/dashboard',
     name: 'post',

@@ -7,20 +7,23 @@ import (
 
 // 数据库，博客数据映射模型
 type Post struct {
-	ID          int       `gorm:"primaryKey"` // ID, store自行控制
-	Title       string    `gorm:"title" `
-	Description string    `gorm:"description"` //摘要/描述
-	Count       int       `gorm:"count"`       // 评论数量
-	Content     string    `gorm:"content" `    //markdown 内容
-	AuthorId    int       `gorm:"author_id"`   //作者
-	IsDraft     bool      `gorm:"is_draft" `   // 是否是草稿
-	DeletedAt   time.Time `gorm:"deleted_at"`  // 删除时间
-	UpdatedAt   time.Time `gorm:"updated_at"`  // 更新时间
-	CreatedAt   time.Time `gorm:"created_at"`  // 创建时间
-	IsDelete    int       `gorm:"is_delete"`   // 是否删除
+	ID          int    `gorm:"primaryKey"` // ID, store自行控制
+	Title       string `gorm:"title" `
+	Description string `gorm:"description"` //摘要/描述
+	Keywords    string `gorm:"keywords"`    //关键词
+	Count       int    `gorm:"count"`       // 评论数量
+	Content     string `gorm:"content" `    //HTML内容
+	MDContent   string `gorm:"md_content" ` //markdown 内容
+	AuthorId    int    `gorm:"author_id"`   //作者
+	//IsDraft     bool      `gorm:"is_draft" `   // 是否是草稿
+	DeletedAt   time.Time `gorm:"deleted_at"` // 删除时间
+	UpdatedAt   time.Time `gorm:"updated_at"` // 更新时间
+	CreatedAt   time.Time `gorm:"created_at"` // 创建时间
+	IsDelete    int       `gorm:"is_delete"`  // 是否删除
 	MusicId     string    `gorm:"music_id"`
 	Url         string    `gorm:"url"`
-	CategoryId  int       `gorm:"category_id"` //所属分类
+	IsPublished int       `gorm:"is_published"` // 是否已经发布 还是只是草稿
+	CategoryId  int       `gorm:"category_id"`  //所属分类
 	Category    string
 }
 type PostJson struct {
@@ -41,7 +44,7 @@ type PostDatail struct {
 }
 
 func (Post) TableName() string {
-	return "post"
+	return "addPost"
 }
 func (e *Post) GetPostById(post_id int) (Post, error) {
 	var post Post

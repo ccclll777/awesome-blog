@@ -61,7 +61,7 @@ func InitHtmlTemplate(viewDir string) (HtmlTemplate, error) {
 
 		return htmlTemplate, err
 	}
-	if htmlTemplate.Article, err = readHtmlTemplate("post", viewDir); err != nil {
+	if htmlTemplate.Article, err = readHtmlTemplate("addPost", viewDir); err != nil {
 
 		return htmlTemplate, err
 	}

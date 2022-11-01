@@ -27,7 +27,6 @@
       fit
       highlight-current-row
       style="width: 100%;"
-      @sort-change="sortChange"
       @selection-change="handleSelectionChange"
     >
       <el-table-column

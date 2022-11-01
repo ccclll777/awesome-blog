@@ -19,6 +19,10 @@ func (e *CategoryService) GetCategoryList(page, pageSize int) ([]models.Category
 	categoryList, err := e.categoryData.GetCategoryList(page, pageSize)
 	return categoryList, err
 }
+func (e *CategoryService) GetAllCategory() ([]models.Category, error) {
+	categoryList, err := e.categoryData.GetAllCategory()
+	return categoryList, err
+}
 
 // 删除分类，删除分类之前需要判断这一类有没有文章
 func (e *CategoryService) DeleteCategoryById(id int) (bool, error) {

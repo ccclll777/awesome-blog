@@ -72,7 +72,34 @@ func (c *TagHandler) TagList(g *gin.Context) {
 	if err != nil {
 		global.Logger.Sugar().Error("Mysql error: ", err.Error())
 		result.Code = handler.ServerError
-		result.Msg = "获取分类列表失败"
+		result.Msg = "获取标签列表失败"
+		g.JSON(http.StatusOK, result) // 返回 json
+		return
+	}
+	result.Data = tagList
+	g.JSON(
+		http.StatusOK, result)
+}
+
+// AllTag godoc
+// @Summary 获取所有标签
+// @Tags Tag
+// @version 1.0
+// @Accept application/json
+// @Success 100 object  ResponseResult
+// @Failure 103/104 object ResponseResult 失败
+// @Router /api/v1/tag/all [get]
+func (c *TagHandler) AllTag(g *gin.Context) {
+	result := ResponseResult{ // 定义 api 返回信息结构
+		Code: handler.Success,
+		Msg:  "获取标签列表成功",
+		Data: nil,
+	}
+	tagList, err := c.tagService.GetAllTag()
+	if err != nil {
+		global.Logger.Sugar().Error("Mysql error: ", err.Error())
+		result.Code = handler.ServerError
+		result.Msg = "获取标签列表失败"
 		g.JSON(http.StatusOK, result) // 返回 json
 		return
 	}
@@ -82,7 +109,7 @@ func (c *TagHandler) TagList(g *gin.Context) {
 }
 
 // DeleteTag godoc
-// @Summary 删除某个分类，删除前先判断是否有属于这个分类的文章
+// @Summary 删除某个标签，删除前先判断是否有属于这个标签的文章
 // @Tags Tag
 // @version 1.0
 // @Accept application/json
@@ -116,24 +143,30 @@ func (c *TagHandler) DeleteTag(g *gin.Context) {
 }
 
 // AddTag godoc
-// @Summary 删除某个分类，删除前先判断是否有属于这个分类的文章
+// @Summary 添加标签
 // @Tags Tag
 // @version 1.0
 // @Accept application/json
 // @Success 100 object  ResponseResult
 // @Failure 103/104 object ResponseResult 失败
-// @Router /api/v1/tag/add [post]
+// @Router /api/v1/tag/add [addPost]
 func (c *TagHandler) AddTag(g *gin.Context) {
 	var request AddTagRequest
 	result := ResponseResult{ // 定义 api 返回信息结构
 		Code: handler.Success,
-		Msg:  "添加分类成功",
+		Msg:  "添加标签成功",
 		Data: nil,
 	}
 	if err := g.ShouldBind(&request); err != nil {
 		result.Code = handler.RequestError    // 请求数据有误
 		result.Msg = utils.GetFormError(err)  // 获取表单错误信息
 		g.JSON(http.StatusBadRequest, result) // 返回 json
+		return
+	}
+	if request.Name == "" {
+		result.Code = handler.RequestError // 请求数据有误
+		result.Msg = "标签名不准为空"             // 获取表单错误信息
+		g.JSON(http.StatusOK, result)      // 返回 json
 		return
 	}
 	_, err := c.tagService.AddTag(request.Name, request.Description)
@@ -149,7 +182,7 @@ func (c *TagHandler) AddTag(g *gin.Context) {
 }
 
 // MultiDelTags godoc
-// @Summary 批量删除分类
+// @Summary 批量删除标签
 // @Tags Tag
 // @version 1.0
 // @Accept application/json

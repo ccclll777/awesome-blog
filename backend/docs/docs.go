@@ -26,7 +26,7 @@ var doc = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/api/v1/auth/login": {
-            "post": {
+            "addPost": {
                 "consumes": [
                     "application/json"
                 ],

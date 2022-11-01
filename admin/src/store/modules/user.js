@@ -23,6 +23,9 @@ const mutations = {
   },
   SET_EMAIL: (state, email) => {
     state.email = email
+  },
+  SET_USERID: (state, userId) => {
+    state.userId = userId
   }
 }
 /*
@@ -35,9 +38,10 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
+        console.log('Promise', data)
         commit('SET_TOKEN', data.token)
+        commit('SET_USERID', data.userId)
         commit('SET_EMAIL', data.email)
-        console.log('data.isAdmin', data.isAdmin)
         commit('SET_ROLE', data.isAdmin)
         setToken(data.token)
         resolve()
@@ -51,6 +55,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo({ token: state.token }).then(response => {
         const { data } = response
+
         commit('SET_TOKEN', getToken())
         commit('SET_EMAIL', data.Email)
         commit('SET_ROLE', data.IsAdmin)

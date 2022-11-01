@@ -23,7 +23,7 @@ type ResponseResult handler.ResponseResult
 // @Accept application/json
 // @Success 100 object  ResponseResult
 // @Failure 103/104 object ResponseResult 失败
-// @Router /api/v1/user/info [post]
+// @Router /api/v1/user/info [addPost]
 func (c *UserHandler) UserInfo(g *gin.Context) {
 	var request UserInfoRequest
 

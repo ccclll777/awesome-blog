@@ -21,6 +21,11 @@ func (e *TagService) GetTagList(page, pageSize int) ([]models.Tag, error) {
 	return tagList, err
 }
 
+func (e *TagService) GetAllTag() ([]models.Tag, error) {
+	tagList, err := e.tagData.GetAllTag()
+	return tagList, err
+}
+
 // 删除标签
 func (e *TagService) DeleteTagById(id int) error {
 	count, _ := e.postTagData.GetPostCountByTagId(id)

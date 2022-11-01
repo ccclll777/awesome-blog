@@ -83,6 +83,32 @@ func (c *CategoryHandler) CategoryList(g *gin.Context) {
 		http.StatusOK, result)
 }
 
+// AllCategory godoc
+// @Summary 获取所有分类
+// @Tags Category
+// @version 1.0
+// @Accept application/json
+// @Success 100 object  ResponseResult
+// @Failure 103/104 object ResponseResult 失败
+// @Router /api/v1/category/all [get]
+func (c *CategoryHandler) AllCategory(g *gin.Context) {
+	result := ResponseResult{ // 定义 api 返回信息结构
+		Code: handler.Success,
+		Msg:  "获取分类列表成功",
+		Data: nil}
+	categoryList, err := c.categoryService.GetAllCategory()
+	if err != nil {
+		global.Logger.Sugar().Error("Mysql error: ", err.Error())
+		result.Code = handler.ServerError
+		result.Msg = "获取分类列表失败"
+		g.JSON(http.StatusOK, result) // 返回 json
+		return
+	}
+	result.Data = categoryList
+	g.JSON(
+		http.StatusOK, result)
+}
+
 // EditCategory godoc
 // @Summary 修改分类信息
 // @Tags Category
@@ -90,7 +116,7 @@ func (c *CategoryHandler) CategoryList(g *gin.Context) {
 // @Accept application/json
 // @Success 100 object  ResponseResult
 // @Failure 103/104 object ResponseResult 失败
-// @Router /api/v1/category/edit [post]
+// @Router /api/v1/category/edit [Post]
 func (c *CategoryHandler) EditCategory(g *gin.Context) {
 	var request EditCategoryRequest
 	result := ResponseResult{ // 定义 api 返回信息结构
@@ -170,7 +196,7 @@ func (c *CategoryHandler) DeleteCategory(g *gin.Context) {
 // @Accept application/json
 // @Success 100 object  ResponseResult
 // @Failure 103/104 object ResponseResult 失败
-// @Router /api/v1/category/add [post]
+// @Router /api/v1/category/add [addPost]
 func (c *CategoryHandler) AddCategory(g *gin.Context) {
 	var request AddCategoryRequest
 	result := ResponseResult{ // 定义 api 返回信息结构
@@ -182,6 +208,12 @@ func (c *CategoryHandler) AddCategory(g *gin.Context) {
 		result.Code = handler.RequestError    // 请求数据有误
 		result.Msg = utils.GetFormError(err)  // 获取表单错误信息
 		g.JSON(http.StatusBadRequest, result) // 返回 json
+		return
+	}
+	if request.Name == "" {
+		result.Code = handler.RequestError // 请求数据有误
+		result.Msg = "分类名不准为空"             // 获取表单错误信息
+		g.JSON(http.StatusOK, result)      // 返回 json
 		return
 	}
 	_, err := c.categoryService.AddCategory(request.Name, request.Description)

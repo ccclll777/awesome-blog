@@ -26,7 +26,7 @@ type ResponseResult handler.ResponseResult
 // @Param LoginRequest body LoginRequest true "登录表单"
 // @Success 100 object  ResponseResult
 // @Failure 103/104 object ResponseResult 失败
-// @Router /api/v1/auth/login [post]
+// @Router /api/v1/auth/login [addPost]
 func (c *AuthHandler) Login(g *gin.Context) {
 	var request LoginRequest
 	result := ResponseResult{ // 定义 api 返回信息结构
@@ -99,7 +99,7 @@ func (c *AuthHandler) Login(g *gin.Context) {
 // @Accept application/json
 // @Success 100 object  ResponseResult
 // @Failure 103/104 object ResponseResult 失败
-// @Router /api/v1/user/logout [post]
+// @Router /api/v1/user/logout [addPost]
 func (c *AuthHandler) Logout(g *gin.Context) {
 	var request LogoutRequest
 

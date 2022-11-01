@@ -13,6 +13,12 @@ export function fetchCategoryList(query) {
     params: query
   })
 }
+export function fetchAllCategory() {
+  return request({
+    url: '/category/all',
+    method: 'get'
+  })
+}
 
 export function updateCategory(data) {
   return request({

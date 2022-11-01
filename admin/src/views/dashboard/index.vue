@@ -10,7 +10,7 @@
               icon="el-icon-notebook-2"
               style="float: right; padding: 3px 0"
               type="text"
-              @click="$router.push('/post')"
+              @click="$router.push('/addPost')"
             />
           </div>
           <div class="text item"><h2 style="color: #2f74ff" class="card-num">{{ indexData.article_count }}</h2></div>
