@@ -116,7 +116,7 @@ func (c *CategoryHandler) AllCategory(g *gin.Context) {
 // @Accept application/json
 // @Success 100 object  ResponseResult
 // @Failure 103/104 object ResponseResult 失败
-// @Router /api/v1/category/edit [Post]
+// @Router /api/v1/category/edit [post]
 func (c *CategoryHandler) EditCategory(g *gin.Context) {
 	var request EditCategoryRequest
 	result := ResponseResult{ // 定义 api 返回信息结构
@@ -190,13 +190,13 @@ func (c *CategoryHandler) DeleteCategory(g *gin.Context) {
 }
 
 // AddCategory godoc
-// @Summary 删除某个分类，删除前先判断是否有属于这个分类的文章
+// @Summary 添加分类
 // @Tags Category
 // @version 1.0
 // @Accept application/json
 // @Success 100 object  ResponseResult
 // @Failure 103/104 object ResponseResult 失败
-// @Router /api/v1/category/add [addPost]
+// @Router /api/v1/category/add [post]
 func (c *CategoryHandler) AddCategory(g *gin.Context) {
 	var request AddCategoryRequest
 	result := ResponseResult{ // 定义 api 返回信息结构

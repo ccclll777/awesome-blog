@@ -3,6 +3,7 @@ package router
 import (
 	"awesome-blog/api/backend/handler/auth"
 	"awesome-blog/api/backend/handler/category"
+	"awesome-blog/api/backend/handler/post"
 	"awesome-blog/api/backend/handler/tag"
 	"awesome-blog/api/backend/handler/user"
 	"awesome-blog/middlewares"
@@ -47,6 +48,22 @@ func (a *ApiRouter) InitAdminRouter(rootPath string, router *gin.Engine) {
 		tagApiRouter.DELETE("/tag/:id", middlewares.AuthAdminMiddleware(), tagHandler.DeleteTag)
 		tagApiRouter.POST("/tag/add", middlewares.AuthAdminMiddleware(), tagHandler.AddTag)
 		tagApiRouter.DELETE("/tag/multiDelete/:ids", middlewares.AuthAdminMiddleware(), tagHandler.MultiDelTags)
+		//tagApiRouter.GET("/tag/postTag", middlewares.AuthAdminMiddleware(), tagHandler.PostTagList)
+
 	}
 
+	postHandler := post.PostHandler{}
+	postApiRouter := router.Group(rootPath)
+	{
+		postApiRouter.GET("/post/count", middlewares.AuthAdminMiddleware(), postHandler.PostCount)
+		postApiRouter.GET("/post/list", middlewares.AuthAdminMiddleware(), postHandler.PostList)
+		postApiRouter.GET("/post/fetchPostById", middlewares.AuthAdminMiddleware(), postHandler.PostById)
+		postApiRouter.POST("/post/add", middlewares.AuthAdminMiddleware(), postHandler.AddPost)
+		postApiRouter.POST("/post/update", middlewares.AuthAdminMiddleware(), postHandler.UpdatePost)
+		postApiRouter.POST("/post/publish", middlewares.AuthAdminMiddleware(), postHandler.PublishPost)
+		postApiRouter.POST("/post/stopPublish", middlewares.AuthAdminMiddleware(), postHandler.StopPublishPost)
+		postApiRouter.POST("/post/delete", middlewares.AuthAdminMiddleware(), postHandler.DeletePost)
+		postApiRouter.POST("/post/undelete", middlewares.AuthAdminMiddleware(), postHandler.UnDeletePost)
+
+	}
 }

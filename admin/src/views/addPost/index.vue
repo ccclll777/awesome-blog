@@ -65,13 +65,13 @@
         <el-button
           type="success"
           :loading="dialogOptions.addDraftBtnLoading"
-          @click="handleRowAdd(false)"
+          @click="handleRowAdd(0)"
         >保存为草稿
         </el-button>
         <el-button
           type="primary"
           :loading="dialogOptions.addBtnLoading"
-          @click="handleRowAdd(true)"
+          @click="handleRowAdd(1)"
         >发布
         </el-button>
         <el-button @click="dialogOptions.addVisible=false">取消</el-button>
@@ -151,8 +151,9 @@ const content1 = ``
 import MarkdownEditor from '@/components/MarkdownEditor'
 import { addCategory, fetchAllCategory } from '@/api/category'
 import { addTag, fetchAllTag } from '@/api/tag'
+import { addPost } from '@/api/post'
 export default {
-  name: 'Post',
+  name: 'AddPost',
   components: { MarkdownEditor },
   data() {
     return {
@@ -163,7 +164,7 @@ export default {
         category_id: null,
         selectTagIds: [],
         tag_ids: '',
-        is_published: true,
+        is_published: 1,
         title: '',
         description: '',
         content: '',
@@ -327,16 +328,12 @@ export default {
     // 添加文章事件
     handleRowAdd(isPublished) {
       // 获取编辑器组件中的文本内容
-      console.log('handleRowAdd')
-      this.addForm.content = this.content
-      console.log('this.content', this.content)
-      this.addForm.md_content = this.$refs.markdownEditor.getHtml()
-      console.log('this.html', this.addForm.md_content)
+      this.addForm.content = this.$refs.markdownEditor.getHtml()
+      this.addForm.md_content = this.content
       // 获取 user_id
-      this.addForm.author_id = Number(localStorage.getItem('uuid'))
+      this.addForm.author_id = Number(this.$store.state.user.userId)
       // 将数组转换成字符串
       this.addForm.tag_ids = this.addForm.selectTagIds.join()
-      console.log('this.addForm.tag_ids', this.addForm.tag_ids)
       this.addForm.is_published = isPublished
       // 校验表单
       this.$refs.addForm.validate((valid) => {
@@ -347,19 +344,20 @@ export default {
             this.dialogOptions.addDraftBtnLoading = true
           }
           // setTimeout(() => {
-          //   addPost(this.addForm)
-          //     .then(res => {
-          //       this.$message.success(res.msg)
-          //       this.dialogOptions.addVisible = false
-          //       this.fetchPageData()
-          //     })
-          //     .catch(() => {
-          //     })
-          //   if (isPublished) {
-          //     this.dialogOptions.addBtnLoading = false
-          //   } else {
-          //     this.dialogOptions.addDraftBtnLoading = false
-          //   }
+          addPost(this.addForm)
+            .then(res => {
+              this.$message.success(res.msg)
+
+              this.dialogOptions.addVisible = false
+              // this.fetchPageData()
+            })
+            .catch(() => {
+            })
+          if (isPublished) {
+            this.dialogOptions.addBtnLoading = false
+          } else {
+            this.dialogOptions.addDraftBtnLoading = false
+          }
           // }, 300)
         }
       })

@@ -18,5 +18,5 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 	post_id := r.Form.Get("id")
 	id, _ := strconv.Atoi(post_id)
 	postDatail := postService.GetPostById(id)
-	articleTemplate.WriteData(w, global.BuildViewData("Post", postDatail))
+	articleTemplate.WriteData(w, global.BuildViewData("post", postDatail))
 }

@@ -26,3 +26,17 @@ func (e *PostTag) GetPostCountByTagId(tag_id int) (int, error) {
 	}
 	return int(total), nil
 }
+
+func (e *PostTag) AddPostTag(postTag PostTag) (PostTag, error) {
+	if err := global.Db.Table(e.TableName()).Create(&postTag).Error; err != nil {
+		return postTag, err
+	}
+	return postTag, nil
+}
+func (e *PostTag) Count(post_id, tag_id int) (int, error) {
+	var total int64
+	if err := global.Db.Table(e.TableName()).Where("post_id = ? and tag_id =? ", post_id, tag_id).Count(&total).Error; err != nil {
+		return 0, err
+	}
+	return int(total), nil
+}

@@ -13,6 +13,7 @@ export function fetchTagList(query) {
     params: query
   })
 }
+
 export function fetchAllTag() {
   return request({
     url: '/tag/all',

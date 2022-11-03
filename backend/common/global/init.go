@@ -2,6 +2,7 @@ package global
 
 import (
 	"context"
+	"fmt"
 	"github.com/go-redis/redis/v9"
 	"gorm.io/gorm"
 )
@@ -23,6 +24,7 @@ func Init() {
 	//创建mysql链接
 	Db = InitMysql()
 	RDb = InitRedis()
+	fmt.Println("SystemCfg.CurrentDir", SystemCfg.CurrentDir+"/templates/frontend")
 	Template, _ = InitHtmlTemplate(SystemCfg.CurrentDir + "/templates/frontend")
 	Navigations = InitExtraNav()
 

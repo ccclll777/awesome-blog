@@ -1,0 +1,47 @@
+# 启动端口号
+server:
+  mode: "release" # 运行模式，debug / release
+  port: "8001" # 端口
+  backend_port: "8002"#admin的端口
+  token_expire_time: 18000 # JWT token 过期时间（单位：秒）
+  token_secret_key: "golang-tech-stack.com"
+  allowed_refers: ["localhost", "127.0.0.1"] # 允许的 referer
+  limit_time: 5 # 限流时间间隔
+  limit_cap: 100 # 间隔时间内最大访问次数
+#博客前端设置
+blog:
+  pageSize: 2
+  descriptionLen: 200
+  author: ccclll777
+  appRepository: "123"
+  appName: "awesome-blog"
+  utterancesRepo: "123"
+  categoryDisplayQuantity: 6
+  tagDisplayQuantity: 6
+  timeLayout: "2006.01.02 15:04"
+  siteName: "ccclll777's Personal Blog"
+  htmlKeywords: "awesome blog,Golang"
+  htmlDescription: "ccclll777's Personal Blog"
+  themeColor: "#f44336"
+  themeOption: [ "#673ab7","#f44336","#9c27b0","#2196f3","#607d8b","#795548" ]
+#扩展导航栏
+navigations:
+  about: ""
+  work: ""
+# MySQL数据源配置
+mysql:
+  username: root      # 修改为自己数据库的用户名
+  password: root    # 修改为自己数据库的密码
+  url: tcp(127.0.0.1:3306)/awesome_blog?charset=utf8&parseTime=True&loc=Local
+redis:
+  url: "localhost:16379"
+  password: ""
+  DB: 0
+# 日志配置
+logger:
+  file_name: "aries.log" # 日志文件
+  max_size: 10 # 最大存储空间（MB）
+  max_backups: 2 # 最大保存个数
+  max_age: 1 # 最大保存时间（天）
+  level: "debug" # 日志级别（"debug", "info", "warn", "error","dpanic" ,"panic","fatal"）
+  format: "admin" # 日志格式（"json", "admin"）

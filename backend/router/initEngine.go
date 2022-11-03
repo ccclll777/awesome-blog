@@ -26,12 +26,3 @@ func InitRouter(r *gin.Engine) {
 	apiRouter := ApiRouter{}
 	apiRouter.InitAdminRouter("/api/v1", r)
 }
-
-//func GetCorsConfig() cors.Config {
-//	config := cors.DefaultConfig()
-//	config.AllowOrigins = []string{"http://localhost:9527/", "http://localhost"}
-//	config.AllowMethods = []string{"POST", "GET", "OPTIONS", "PUT", "DELETE"}
-//	config.AllowCredentials = true
-//	config.AllowHeaders = []string{"x-requested-with", "Content-Type", "AccessToken", "X-CSRF-Token", "X-Token", "Authorization", "token"}
-//	return config
-//}

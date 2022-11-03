@@ -9,7 +9,8 @@ import PostCategory from '@/views/category/index'
 import Dashboard from '@/views/dashboard/index'
 import Tag from '@/views/tag/index'
 
-import Post from '@/views/addPost/index'
+import AddPost from '@/views/addPost/index'
+import Post from '@/views/post/index'
 import Login from '@/views/login/index'
 import Error404 from '@/views/errorPage/404'
 export const constantRoutes = [
@@ -36,7 +37,7 @@ export const constantRoutes = [
     }]
   },
   {
-    path: '/addPost',
+    path: '/post',
     component: Layout,
     redirect: '/dashboard',
     name: 'post',
@@ -55,10 +56,16 @@ export const constantRoutes = [
         meta: { title: '文章标签', icon: 'component' }
       },
       {
-        path: 'post',
+        path: 'postList',
         component: Post,
-        name: 'User3',
-        meta: { title: '写文章', icon: 'edit' }
+        name: 'postList',
+        meta: { title: '文章列表', icon: 'el-icon-document' }
+      },
+      {
+        path: 'addPost',
+        component: AddPost,
+        name: 'addPost',
+        meta: { title: '写文章', icon: 'el-icon-edit' }
       }
     ]
   },
