@@ -3,8 +3,8 @@
     <div class="categories">
         {{range .Data}}
             <div class="categories-card">
-                <a href="/backend/public?tag={{ .Name }}">
-                    <h3><img class="icon" src="/img/folder.svg" alt=""> {{ .Name }} <sub>({{ .Quantity }})</sub></h3>
+                <a href="/?tag={{ .Name }}">
+                    <h3><img class="icon" src="/public/img/folder.svg" alt=""> {{ .Name }} <sub>({{ .Quantity }})</sub></h3>
                 </a>
                 <article class="categories-article">
                     {{range .Posts}}

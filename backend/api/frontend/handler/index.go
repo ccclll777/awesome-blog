@@ -11,6 +11,9 @@ import (
 /*
 主页所需的数据
 */
+/*
+主页所需的数据
+*/
 var indexPostService service.IndexService
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {

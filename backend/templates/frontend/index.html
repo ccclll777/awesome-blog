@@ -10,10 +10,10 @@
         <div class="article-info">
             {{ if ne .Category "" }}
             <span>
-                    <img class="icon" src="/backend/publiclder.svg" alt="">
+                    <img class="icon" src="/public/img/folder.svg" alt="">
                     <span>
                         分类于
-                        <a class="category" href="/publicy={{ .Category }}">{{ .Category }}</a>
+                        <a class="category" href="/?category={{ .Category }}">{{ .Category }}</a>
                     </span>
                 </span>
             <span class="divider-line"></span>
@@ -21,11 +21,11 @@
 
             {{ if .Tags }}
             <span>
-                    <img class="icon" src="/backend/publicgs.svg" alt="">
+                    <img class="icon" src="/public/img/tags.svg" alt="">
                     <span>
                         标签
                       {{ range .Tags }}
-                         <a class="category" href="/public. }}">{{ . }}</a>
+                         <a class="category" href="/?tag={{ . }}">{{ . }}</a>
                      {{ end }}
                     </span>
                 </span>
@@ -33,7 +33,7 @@
             {{ end }}
 
             <span>
-                    <img class="icon" src="/backend/publicte.svg" alt="">
+                    <img class="icon" src="/public/img/date.svg" alt="">
                     <span>发表于{{ .Date.Format "2006-01-02 15:04" }}</span>
                 </span>
         </div>

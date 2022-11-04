@@ -6,21 +6,21 @@
 <div class="article-info">
     {{ if ne .Data.Category "" }}
     <span>
-            <img class="icon" src="/img/folder.svg" alt="">
+            <img class="icon" src="/public/img/folder.svg" alt="">
             <span>
                 分类于
-                <a class="category" href="/publicy={{ .Data.Category }}">{{ .Data.Category }}</a>
+                <a class="category" href="/?category={{ .Data.Category }}">{{ .Data.Category }}</a>
             </span>
         </span>
     <span class="divider-line"></span>
     {{ end }}
     {{ if .Data.Tags }}
     <span>
-            <img class="icon" src="/backend/publicgs.svg" alt="">
+            <img class="icon" src="/public/img/tags.svg" alt="">
              <span>
                 标签
                  {{ range  .Data.Tags }}
-                <a class="category" href="/public. }}">{{ . }}</a>
+                <a class="category" href="/?tag={{ . }}">{{ . }}</a>
                  {{ end }}
             </span>
          </span>
@@ -28,7 +28,7 @@
     {{ end }}
 
     <span>
-            <img class="icon" src="/backend/publicte.svg" alt="">
+            <img class="icon" src="/public/img/date.svg" alt="">
             <span>发表于{{ .Data.UpdatedAt.Format "2006-01-02 15:04" }}</span>
         </span>
 </div>
@@ -42,7 +42,7 @@
     {{  .Data.Body }}
 </div>
 
-<script src="/backend/publicsm.js"></script>
+<script src="/public/js/prism.js"></script>
 {{if ne .Config.UtterancesRepo ""}}
     <script src="https://utteranc.es/client.js"
             repo="{{ .Config.UtterancesRepo }}"

@@ -61,7 +61,7 @@ func InitHtmlTemplate(viewDir string) (HtmlTemplate, error) {
 
 		return htmlTemplate, err
 	}
-	if htmlTemplate.Article, err = readHtmlTemplate("addPost", viewDir); err != nil {
+	if htmlTemplate.Article, err = readHtmlTemplate("post", viewDir); err != nil {
 
 		return htmlTemplate, err
 	}
@@ -81,7 +81,6 @@ func SpreadDigit(n int) []int {
 }
 
 func readHtmlTemplate(htmlFileName string, viewDir string) (TemplatePointer, error) {
-
 	head := viewDir + "/layouts/head.html"
 	footer := viewDir + "/layouts/footer.html"
 

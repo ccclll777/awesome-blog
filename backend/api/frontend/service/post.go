@@ -24,7 +24,7 @@ func (c *PostService) GetPostById(post_id int) models.PostDatail {
 		tagNames = append(tagNames, tag.Name)
 	}
 	category, _ := c.categoryData.GetCategoryById(post.CategoryId)
-	markdown := []byte(post.Content)
+	markdown := []byte(post.MDContent)
 	var buf bytes.Buffer
 	if err := goldmark.Convert(markdown, &buf); err != nil {
 		fmt.Errorf("出错")

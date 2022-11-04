@@ -2,7 +2,7 @@
 server:
   mode: "release" # 运行模式，debug / release
   port: "8001" # 端口
-  backend_port: "8002"#admin的端口
+  backend_port: "8080"#admin的端口
   token_expire_time: 18000 # JWT token 过期时间（单位：秒）
   token_secret_key: "golang-tech-stack.com"
   allowed_refers: ["localhost", "127.0.0.1"] # 允许的 referer
@@ -10,7 +10,7 @@ server:
   limit_cap: 100 # 间隔时间内最大访问次数
 #博客前端设置
 blog:
-  pageSize: 2
+  pageSize: 10
   descriptionLen: 200
   author: ccclll777
   appRepository: "123"
